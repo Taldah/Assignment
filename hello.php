@@ -3,7 +3,7 @@
         <title>PHP Hello World!</title>
     </head>
     <body>
-        <?php echo '<h1>Hello World</h1>'; ?>
-        <?php phpinfo(); ?>
+       <h1>Hello World</h1>
+       <h2>Good Luck!<h2>
     </body>
 </html>
