@@ -1,18 +1,16 @@
-FROM alpine:latest
+FROM php:7.4-fpm-alpine
 
-RUN apk update && apk upgrade
-RUN apk add bash
-RUN apk add nginx
-RUN apk add php8 php8-fpm php8-opcache
-RUN apk add php8-gd php8-zlib php8-curl
+WORKDIR /var/www
+ 
+RUN apk update && apk add \
+    build-base \
+    vim
+RUN docker-php-ext-install pdo_mysql 
+RUN addgroup -g 1000 -S www && \
+    adduser -u 1000 -S www -G www
 
-COPY server/etc/nginx /etc/nginx
-COPY server/etc/php /etc/php8
-COPY src /usr/share/nginx/html
-RUN mkdir /var/run/php
-EXPOSE 80
-EXPOSE 443
 
-STOPSIGNAL SIGTERM
+USER www
+COPY --chown=www:www . /var/www
 
-CMD ["/bin/bash", "-c", "php-fpm8 && chmod 777 /var/run/php/php8-fpm.sock && chmod 755 /usr/share/nginx/html/* && nginx -g 'daemon off;'"]
+EXPOSE 9000
