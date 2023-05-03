@@ -30,6 +30,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ${{ Dockerfil1 }}
+          file: Dockerfil1
           push: true
           tags: taldah/assign:lates
